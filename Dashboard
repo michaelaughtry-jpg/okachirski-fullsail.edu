@@ -1,1 +1,50 @@
+class ABC {
+    <<Python library>>
+}
 
+class RuleStrategy {
+    <<abstract>>
+    +evaluate(record) RuleResult
+}
+
+class KeywordRule {
+    +keyword: str
+    +evaluate(record) RuleResult
+}
+
+class ByteThresholdRule {
+    +threshold_bytes: int
+    +evaluate(record) RuleResult
+}
+
+class RuleResult {
+    +evaluated: bool
+    +matched: bool
+    +reason: str
+}
+
+class TrafficClassifier {
+    -strategy: RuleStrategy
+    +set_strategy(strategy)
+    +evaluate(record) RuleResult
+}
+
+class DashboardController {
+    +run_classification(records)
+    +combine_results(results) str
+}
+
+class Streamlit {
+    <<module>>
+    +button(label) bool
+}
+
+ABC <|-- RuleStrategy
+RuleStrategy <|-- KeywordRule
+RuleStrategy <|-- ByteThresholdRule
+TrafficClassifier --> RuleStrategy : delegates to
+RuleStrategy ..> RuleResult : returns
+DashboardController --> TrafficClassifier : uses
+DashboardController ..> KeywordRule : creates
+DashboardController ..> ByteThresholdRule : creates
+DashboardController ..> Streamlit : calls button
