@@ -1,7 +1,3 @@
-class ABC {
-    <<Python library>>
-}
-
 class RuleStrategy {
     <<abstract>>
     +evaluate(record) RuleResult
