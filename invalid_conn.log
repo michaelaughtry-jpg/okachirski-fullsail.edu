@@ -1,0 +1,6 @@
+#separator \x09
+#unset_field	-
+#empty_field	(empty)
+#fields	ts	uid	id.orig_h	id.resp_h	proto	service	orig_bytes	resp_bytes
+1728000000	C001	192.0.2.10	198.51.100.20	tcp	http	1200	3400
+1728000001	C002	192.0.2.11	198.51.100.21	tcp	telnet	-4	500
