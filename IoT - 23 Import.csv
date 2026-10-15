@@ -1,0 +1,10 @@
+protocol,service,orig_bytes,resp_bytes
+tcp,http,1200,3400
+udp,dns,60,100
+tcp,telnet,400,500
+tcp,irc,75,243
+udp,dns,156,0
+tcp,irc,75,243
+udp,dns,78,0
+udp,dns,39,103
+tcp,irc,62,269
