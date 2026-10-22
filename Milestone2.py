@@ -2,9 +2,11 @@ import csv
 import sqlite3
 import traffic
 
-database = sqlite3.connect('traffic.db') 
+# Connect to database
+db = sqlite3.connect('traffic.db') 
 
-database.execute('''
+# Create table
+db.execute('''
     create table if not exists traffic (
         protocol,
         service,
@@ -13,37 +15,48 @@ database.execute('''
         reason
     )
 ''')
-with open('IoT - 23 Import.csv', newline='') as file:
-    reader= csv.DictReader(file)
 
-    for row in reader:
-        protocol= row['protocol']
-        service= row['service']
-        orig= int(row['orig_bytes'])
-        resp= int(row['resp_bytes'])
+# Open CSV file
+with open('IoT - 23 Import.csv', newline='') as f:
+    r = csv.DictReader(f)
 
-        sum= traffic.total(orig, resp)
+    # Loop through each row in CSV
+    for row in r:
+        proto = row['protocol']
+        serv = row['service']
+        orig = int(row['orig_bytes'])
+        resp = int(row['resp_bytes'])
 
-        if service.strip().lower() == 'telnet':
-            result= 'flagged'
-            reason= 'telnet service'
+        # Calculate sum of bytes
+        sum = traffic.total(orig, resp)
+
+        # Flag telnet service
+        if serv.strip().lower() == 'telnet':
+            res = 'flagged'
+            reason = 'telnet service'
+        # Flag high traffic
         elif traffic.high(orig, resp):
-            result= 'flagged'
-            reason= 'high traffic'
+            res = 'flagged'
+            reason = 'high traffic'
+        # Do not flag low traffic
         else:
-            result= 'not flagged'
-            reason= 'low traffic'
-        database.execute(
+            res = 'not flagged'
+            reason = 'low traffic'
+
+        # Insert into database
+        db.execute(
             'insert into traffic values (?, ?, ?, ?, ?)',
-            (protocol, service, sum, result, reason)
+            (proto, serv, sum, res, reason)
         )
 
-        print('protocol:', protocol)
-        print('service:', service)
+        # Print results
+        print('protocol:', proto)
+        print('service:', serv)
         print('sum bytes:', sum)
-        print('result:', result)
+        print('result:', res)
         print('reason:', reason)
         print()
 
-database.commit()
-database.close()
+# Commit changes and close database connection
+db.commit()
+db.close()
