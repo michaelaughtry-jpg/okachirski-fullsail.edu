@@ -1,0 +1,6 @@
+group,category,records,total_bytes
+Overall,all,10,7068
+Protocol,tcp,6,6532
+Protocol,udp,4,536
+Result,flagged,3,5565
+Result,not flagged,7,1503
