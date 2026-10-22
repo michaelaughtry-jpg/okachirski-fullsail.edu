@@ -1,0 +1,11 @@
+protocol,service,total_bytes,result,reason
+tcp,http,4600,flagged,high traffic
+udp,dns,160,not flagged,low traffic
+tcp,telnet,900,flagged,telnet service
+tcp,irc,318,not flagged,low traffic
+udp,dns,156,not flagged,low traffic
+tcp,irc,318,not flagged,low traffic
+udp,dns,78,not flagged,low traffic
+udp,dns,142,not flagged,low traffic
+tcp,irc,331,not flagged,low traffic
+tcp,telnet,65,flagged,telnet service
