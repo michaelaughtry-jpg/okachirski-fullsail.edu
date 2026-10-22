@@ -1,5 +1,6 @@
 import csv
 import sqlite3
+import traffic
 
 database = sqlite3.connect('traffic.db') 
 
@@ -21,12 +22,12 @@ with open('IoT - 23 Import.csv', newline='') as file:
         orig= int(row['orig_bytes'])
         resp= int(row['resp_bytes'])
 
-        sum= orig + resp
+        sum= traffic.total(orig, resp)
 
-        if service== sum > 500:
+        if service.strip().lower() == 'telnet':
             result= 'flagged'
-            reason= 'bytes over 500'
-        elif sum > 500:
+            reason= 'telnet service'
+        elif traffic.high(orig, resp):
             result= 'flagged'
             reason= 'high traffic'
         else:
